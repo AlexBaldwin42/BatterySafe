@@ -6,6 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:id="@+id/vMain"
     tools:context=".MyActivity">
 
     <Spinner
@@ -21,8 +22,7 @@
         android:layout_below="@+id/spinBattery"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout"
-        android:background="#ff94fffc">
+        android:id="@+id/linearLayout">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,15 +49,35 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Pick battery and enter resistance"
         android:id="@+id/tvDisplay"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dip"
-        android:paddingTop="30dp"
         android:textAlignment="center"
-        android:layout_below="@+id/linearLayout" />
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="For 4.2 volts"
+        android:id="@+id/tvVolts"
+        android:layout_below="@+id/tvDisplay"
+        android:layout_toRightOf="@+id/tvAmps"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Amps"
+        android:id="@+id/tvAmps"
+        android:layout_alignTop="@+id/tvVolts"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

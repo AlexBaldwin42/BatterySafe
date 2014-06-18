@@ -1,32 +1,25 @@
 package alex.batterysafe;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 
 public class MyActivity extends ActionBarActivity {
 
     Spinner spinBattery;
+    View vMain;
     EditText etOhm;
-    TextView tvDisplay;
+    TextView tvDisplay, tvAmps, tvVolts;
     String[] arBatteries = {"Sony Vtc 4 18650 2500mah 30amp","LG LGDBHE21865 2500mah 20amp", "Awr 2200 mah 10amp"};
 
 
@@ -35,10 +28,12 @@ public class MyActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-
+        vMain =  findViewById(R.id.vMain);
         spinBattery = (Spinner) findViewById(R.id.spinBattery);
         etOhm = (EditText) findViewById(R.id.etOhm);
         tvDisplay = (TextView) findViewById(R.id.tvDisplay);
+        tvAmps = (TextView) findViewById(R.id.tvAmps);
+        tvVolts = (TextView) findViewById(R.id.tvVolts);
         BatteryListener listener = new BatteryListener();
         etOhm.setText("1.5");
         etOhm.setOnClickListener(listener);
@@ -101,14 +96,15 @@ public class MyActivity extends ActionBarActivity {
             }
 
             if(dAmps < dischargeRate ){
-                tvDisplay.setText("This setup is safe.\nPulls " + sAmps + " Amps at 4.2 volts");
-                tvDisplay.setBackgroundColor(Color.GREEN);
+                tvDisplay.setText("This setup is safe.");
+                vMain.setBackgroundColor(Color.parseColor("#99FF99"));
 
 
             }else{
-                tvDisplay.setText("This setup is UNsafe.\nPulls "  + sAmps + " Amps at 4.2 volts");
-                tvDisplay.setBackgroundColor(Color.RED);
+                tvDisplay.setText("This setup is UNsafe.");
+                vMain.setBackgroundColor(Color.parseColor("#FF9999"));
             }
+            tvAmps.setText(sAmps + " Amps");
         }
 
         @Override

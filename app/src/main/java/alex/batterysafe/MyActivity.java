@@ -76,7 +76,7 @@ public class MyActivity extends ActionBarActivity {
         public void onClick(View view) {
 
             double dAmps = 0;
-
+            String sAmps;
             int dischargeRate = 0;
             double dOhm = Double.parseDouble(etOhm.getText().toString());
             long id = spinBattery.getSelectedItemId();
@@ -85,6 +85,12 @@ public class MyActivity extends ActionBarActivity {
             if (id == 1 ) dischargeRate = 20;
             if (id == 2 ) dischargeRate = 10;
             dAmps = 4.2/dOhm;
+            sAmps = String.valueOf(dAmps);
+
+            if(sAmps.length()>=5){
+                sAmps = sAmps.substring(0,4);
+
+            }
 
 
             if(dOhm <= 0){
@@ -95,12 +101,12 @@ public class MyActivity extends ActionBarActivity {
             }
 
             if(dAmps < dischargeRate ){
-                tvDisplay.setText("This setup is safe.\nPulls " + String.valueOf(dAmps).substring(0,4) + " Amps at 4.2 volts");
+                tvDisplay.setText("This setup is safe.\nPulls " + sAmps + " Amps at 4.2 volts");
                 tvDisplay.setBackgroundColor(Color.GREEN);
 
 
             }else{
-                tvDisplay.setText("This setup is UNsafe.\nPulls "  .valueOf(dAmps).substring(0,4) + " Amps at 4.2 volts");
+                tvDisplay.setText("This setup is UNsafe.\nPulls "  + sAmps + " Amps at 4.2 volts");
                 tvDisplay.setBackgroundColor(Color.RED);
             }
         }

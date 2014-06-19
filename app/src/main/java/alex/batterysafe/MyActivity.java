@@ -1,8 +1,10 @@
 package alex.batterysafe;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +22,8 @@ public class MyActivity extends ActionBarActivity {
     View vMain;
     EditText etOhm;
     TextView tvDisplay, tvAmps, tvVolts;
-    String[] arBatteries = {"Sony Vtc 4 18650 2500mah 30amp","LG LGDBHE21865 2500mah 20amp", "Awr 2200 mah 10amp"};
+    String[] arBatteries;
+            //= {"Sony Vtc 4 18650 2500mah 30amp","LG LGDBHE21865 2500mah 20amp", "Awr 2200 mah 10amp"};
 
 
 
@@ -38,6 +41,9 @@ public class MyActivity extends ActionBarActivity {
         etOhm.setText("1.5");
         etOhm.setOnClickListener(listener);
         spinBattery.setOnItemSelectedListener(listener);
+
+        Resources res = getResources();
+        arBatteries = res.getStringArray(R.array.batteries);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, arBatteries);
         spinBattery.setAdapter(adapter);
@@ -70,15 +76,17 @@ public class MyActivity extends ActionBarActivity {
         @Override
         public void onClick(View view) {
 
-            double dAmps = 0;
             String sAmps;
-            int dischargeRate = 0;
-            double dOhm = Double.parseDouble(etOhm.getText().toString());
+            double dAmps = 0;
             long id = spinBattery.getSelectedItemId();
+            String battery = arBatteries[(int)id];
 
-            if (id == 0 ) dischargeRate = 30;
-            if (id == 1 ) dischargeRate = 20;
-            if (id == 2 ) dischargeRate = 10;
+            //Obtain amp rating from description
+            //TODO Need to remake this not taking decimal places
+            double dischargeRate = Double.parseDouble(battery.substring(battery.length() - 5, battery.length() - 3));
+            double dOhm = Double.parseDouble(etOhm.getText().toString());
+
+
             dAmps = 4.2/dOhm;
             sAmps = String.valueOf(dAmps);
 
@@ -95,10 +103,9 @@ public class MyActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
             }
 
-            if(dAmps < dischargeRate ){
+            if(dAmps <=  dischargeRate ){
                 tvDisplay.setText("This setup is safe.");
                 vMain.setBackgroundColor(Color.parseColor("#99FF99"));
-
 
             }else{
                 tvDisplay.setText("This setup is UNsafe.");

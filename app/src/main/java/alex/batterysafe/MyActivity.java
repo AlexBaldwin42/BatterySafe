@@ -83,7 +83,14 @@ public class MyActivity extends ActionBarActivity {
 
             //Obtain amp rating from description
             //TODO Need to remake this not taking decimal places
-            double dischargeRate = Double.parseDouble(battery.substring(battery.length() - 5, battery.length() - 3));
+            String sDischargeRate = battery.substring(battery.length() - 7, battery.length() - 3);
+            if(sDischargeRate.substring(0,1).equals("h")){
+                sDischargeRate = sDischargeRate.substring(1);
+            }else if(sDischargeRate.substring(0,2).equals("ah")){
+                sDischargeRate = sDischargeRate.substring(2);
+            }
+
+            double dischargeRate = Double.parseDouble(sDischargeRate);
             double dOhm = Double.parseDouble(etOhm.getText().toString());
 
 

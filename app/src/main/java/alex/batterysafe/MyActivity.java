@@ -15,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 public class MyActivity extends ActionBarActivity {
 
     Spinner spinBattery;
@@ -23,9 +22,6 @@ public class MyActivity extends ActionBarActivity {
     EditText etOhm;
     TextView tvDisplay, tvAmps, tvVolts;
     String[] arBatteries;
-            //= {"Sony Vtc 4 18650 2500mah 30amp","LG LGDBHE21865 2500mah 20amp", "Awr 2200 mah 10amp"};
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +34,7 @@ public class MyActivity extends ActionBarActivity {
         tvAmps = (TextView) findViewById(R.id.tvAmps);
         tvVolts = (TextView) findViewById(R.id.tvVolts);
         BatteryListener listener = new BatteryListener();
+
         etOhm.setText("1.5");
         etOhm.setOnClickListener(listener);
         spinBattery.setOnItemSelectedListener(listener);
@@ -48,9 +45,7 @@ public class MyActivity extends ActionBarActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, arBatteries);
         spinBattery.setAdapter(adapter);
 
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,49 +71,59 @@ public class MyActivity extends ActionBarActivity {
         @Override
         public void onClick(View view) {
 
-            String sAmps;
+            double dDischargeRate;
+            double dOhm;
             double dAmps = 0;
             long id = spinBattery.getSelectedItemId();
-            String battery = arBatteries[(int)id];
+            String sAmps;
+            String sDischargeRate;
+            String battery = arBatteries[(int) id];
 
             //Obtain amp rating from description
-            //TODO Need to remake this not taking decimal places
-            String sDischargeRate = battery.substring(battery.length() - 7, battery.length() - 3);
-            if(sDischargeRate.substring(0,1).equals("h")){
+            sDischargeRate = battery.substring(battery.length() - 7, battery.length() - 3);
+            if (sDischargeRate.substring(0, 1).equals("h")) {
                 sDischargeRate = sDischargeRate.substring(1);
-            }else if(sDischargeRate.substring(0,2).equals("ah")){
+            } else if (sDischargeRate.substring(0, 2).equals("ah")) {
                 sDischargeRate = sDischargeRate.substring(2);
             }
 
-            double dischargeRate = Double.parseDouble(sDischargeRate);
-            double dOhm = Double.parseDouble(etOhm.getText().toString());
+            //Find discharge of battery and the resistance
+            dDischargeRate = Double.parseDouble(sDischargeRate);
 
+            Log.d("ABOUT TO PARSE ETOHM: ", etOhm.getText().toString());
+            if(etOhm.getText().toString().equals(".")){
+                dOhm = 0;
+            }else {
 
-            dAmps = 4.2/dOhm;
+                dOhm = Double.parseDouble(etOhm.getText().toString());
+            }
+
+            //Determine how many amps are being used.
+            dAmps = 4.2 / dOhm;
             sAmps = String.valueOf(dAmps);
 
-            if(sAmps.length()>=5){
-                sAmps = sAmps.substring(0,4);
+            if (sAmps.length() >= 5) {
+                sAmps = sAmps.substring(0, 4);
 
             }
 
-
-            if(dOhm <= 0){
-                dOhm = 1.5;
-                etOhm.setText("1.5");
+            if (dOhm <= 0) {
+                // dOhm = 1.5;
+                // etOhm.setText("1.5");
                 CharSequence text = "Resistance cannot be Zero";
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
-            }
-
-            if(dAmps <=  dischargeRate ){
-                tvDisplay.setText("This setup is safe.");
-                vMain.setBackgroundColor(Color.parseColor("#99FF99"));
-
-            }else{
-                tvDisplay.setText("This setup is UNsafe.");
                 vMain.setBackgroundColor(Color.parseColor("#FF9999"));
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
+            } else {
+                if (dAmps <= dDischargeRate) {
+                    tvDisplay.setText("This setup is safe.");
+                    vMain.setBackgroundColor(Color.parseColor("#99FF99"));
+                } else {
+                    tvDisplay.setText("This setup is UNsafe.");
+                    vMain.setBackgroundColor(Color.parseColor("#FF9999"));
+                }
+                tvAmps.setText(sAmps + " Amps");
             }
-            tvAmps.setText(sAmps + " Amps");
+
         }
 
         @Override

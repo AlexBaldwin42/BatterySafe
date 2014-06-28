@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Vaporizer Basics"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Resistance"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Resistance is how much the coil resists the flow of electricity. The more resistance the less power going to the atomizer. If the resitance is low there will be more power going to the coils. Resistance is mesured in ohms. For cartomizers they usually range from 2.0 to 3.0. "
+        android:id="@+id/resistance"
+        android:layout_below="@+id/textView2"
+        android:paddingLeft="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Amperage"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/resistance"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Amperage is a measure of how much electricity is going through the circuit. This is determined by the resitance and the voltage. Single cell lithium ion batteries are 3.7 volts when they are fully charged they are around 4.2 volts. If you divide the voltage by the resistance you can find out how many amps the circut is pulling."
+        android:id="@+id/textView6"
+        android:layout_below="@+id/textView4"
+        android:paddingLeft="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+
+</RelativeLayout>
